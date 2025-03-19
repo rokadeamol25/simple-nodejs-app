@@ -1,13 +1,14 @@
 import React from 'react';
-import './App.css';
-import Hello from './Hello';
+import StudentForm from './StudentForm';
 
 function App() {
-  return (
-    <div className="App">
-      <Hello />
-    </div>
-  );
+    return (
+        <div>
+            <h1>Student Management</h1>
+            <StudentForm />
+        </div>
+    );
 }
 
 export default App;
+
