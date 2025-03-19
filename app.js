@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { Pool } = require('pg');
+const path = require('path');
 
 const app = express();
 const port = 3001;
@@ -40,6 +41,17 @@ app.get('/api/students', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Serve static files from React build folder in production
+if (process.env.NODE_ENV === 'production') {
+    // Set up static file serving for React's build directory
+    app.use(express.static(path.join(__dirname, 'client', 'build')));
+
+    // Send React's index.html for all other requests (for client-side routing)
+    app.get('*', (req, res) => {
+        res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+    });
+}
 
 app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
